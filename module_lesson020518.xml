@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_lesson020518" default="compile.module.lesson020518">
+  <dirname property="module.lesson020518.basedir" file="${ant.file.module_lesson020518}"/>
+  
+  <property name="module.jdk.home.lesson020518" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.lesson020518" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.lesson020518" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.lesson020518" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="lesson020518.output.dir" value="${module.lesson020518.basedir}/out/production/lesson020518"/>
+  <property name="lesson020518.testoutput.dir" value="${module.lesson020518.basedir}/out/test/lesson020518"/>
+  
+  <path id="lesson020518.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="lesson020518.module.production.classpath">
+    <path refid="${module.jdk.classpath.lesson020518}"/>
+  </path>
+  
+  <path id="lesson020518.runtime.production.module.classpath">
+    <pathelement location="${lesson020518.output.dir}"/>
+  </path>
+  
+  <path id="lesson020518.module.classpath">
+    <path refid="${module.jdk.classpath.lesson020518}"/>
+    <pathelement location="${lesson020518.output.dir}"/>
+  </path>
+  
+  <path id="lesson020518.runtime.module.classpath">
+    <pathelement location="${lesson020518.testoutput.dir}"/>
+    <pathelement location="${lesson020518.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.lesson020518">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.lesson020518">
+    <patternset refid="excluded.from.module.lesson020518"/>
+  </patternset>
+  
+  <path id="lesson020518.module.sourcepath">
+    <dirset dir="${module.lesson020518.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.lesson020518" depends="compile.module.lesson020518.production,compile.module.lesson020518.tests" description="Compile module lesson020518"/>
+  
+  <target name="compile.module.lesson020518.production" depends="register.custom.compilers" description="Compile module lesson020518; production classes">
+    <mkdir dir="${lesson020518.output.dir}"/>
+    <javac2 destdir="${lesson020518.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.lesson020518}/javac">
+      <compilerarg line="${compiler.args.lesson020518}"/>
+      <bootclasspath refid="lesson020518.module.bootclasspath"/>
+      <classpath refid="lesson020518.module.production.classpath"/>
+      <src refid="lesson020518.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.lesson020518"/>
+    </javac2>
+    
+    <copy todir="${lesson020518.output.dir}">
+      <fileset dir="${module.lesson020518.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.lesson020518.tests" depends="register.custom.compilers,compile.module.lesson020518.production" description="compile module lesson020518; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.lesson020518" description="cleanup module">
+    <delete dir="${lesson020518.output.dir}"/>
+    <delete dir="${lesson020518.testoutput.dir}"/>
+  </target>
+</project>
